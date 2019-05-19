@@ -2,7 +2,7 @@ import { all, takeLatest } from 'redux-saga/effects';
 
 import { Types as PostTypes } from '../ducks/posts';
 import { Types as CategoriesTypes } from '../ducks/categories';
-import { loadPosts, addPost } from './posts';
+import { loadPosts, addPost, updatePost } from './posts';
 import { loadCategories } from './categories';
 
 export default function* rootSaga() {
@@ -10,5 +10,6 @@ export default function* rootSaga() {
     takeLatest(PostTypes.LOAD_POSTS_REQUEST, loadPosts),
     takeLatest(CategoriesTypes.LOAD_CATEGORIES_REQUEST, loadCategories),
     takeLatest(PostTypes.ADD_POST_REQUEST, addPost),
+    takeLatest(PostTypes.UPDATE_POST_REQUEST, updatePost),
   ]);
 }

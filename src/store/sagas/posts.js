@@ -38,3 +38,23 @@ export function* addPost(action) {
     toast.error(message);
   }
 }
+
+function updatePostAction(payload) {
+  return api.put(`/posts/${payload.id}`, payload);
+}
+
+export function* updatePost(action) {
+  let message = 'Post succesfully updated';
+  try {
+    const { data } = yield call(updatePostAction, action.payload.post);
+
+    yield put(PostsActions.updatePostSuccess(data));
+    // Redirect form
+    action.payload.cbSuccess();
+    toast.success(message);
+  } catch (error) {
+    message = 'Error when updating post';
+    yield put(PostsActions.updatePostFailure(message));
+    toast.error(message);
+  }
+}

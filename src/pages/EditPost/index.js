@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,32 +15,40 @@ import {
 
 import schema from './validation';
 
-class NewPost extends Component {
+class EditPost extends Component {
   static propTypes = {
+    history: PropTypes.shape({}).isRequired,
     categories: PropTypes.shape({}).isRequired,
-    addPostRequest: PropTypes.func.isRequired,
+    post: PropTypes.shape({}).isRequired,
+    updatePostRequest: PropTypes.func.isRequired,
   };
 
-  onSubmit = (data, { resetForm }) => {
-    const { addPostRequest } = this.props;
+  redirect = () => {
+    const { history } = this.props;
+    history.push('/');
+  };
 
-    const newPost = {
-      id: uuid(),
+  onSubmit = (data) => {
+    const { updatePostRequest, post } = this.props;
+
+    const updatedPost = {
+      id: post.id,
       timestamp: Date.now(),
       ...data,
     };
 
-    addPostRequest(newPost, resetForm);
+    updatePostRequest(updatedPost, this.redirect);
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, post } = this.props;
+
     return (
       <Container>
-        <PageTitle>Create a New Post</PageTitle>
+        <PageTitle>Edit the Post</PageTitle>
         <Row>
           <Col>
-            <Form schema={schema} onSubmit={this.onSubmit}>
+            <Form schema={schema} onSubmit={this.onSubmit} initialData={post}>
               <InputContainer>
                 <Input name="title" label="Title:" className="form-control" />
               </InputContainer>
@@ -49,7 +56,7 @@ class NewPost extends Component {
                 <Textarea name="body" label="Body:" className="form-control" />
               </InputContainer>
               <InputContainer>
-                <Input name="author" label="Author:" className="form-control" />
+                <Input name="author" label="Author:" className="form-control" disabled />
               </InputContainer>
               <InputContainer>
                 <Select
@@ -71,11 +78,14 @@ class NewPost extends Component {
   }
 }
 
-const mapStateToProps = ({ categories }) => ({ categories });
+const mapStateToProps = ({ categories, posts }, ownProps) => ({
+  categories,
+  post: posts.data.find(post => post.id === ownProps.match.params.id),
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(PostActions, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NewPost);
+)(EditPost);
