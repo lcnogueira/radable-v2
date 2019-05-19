@@ -1,4 +1,4 @@
-# Readable(V2)
+# Readable - V2
 
 Readable is a content and comment web app that was developed by using React and Material UI. Users will be able to post content to 3 predefined categories (redux, react or udacity), comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
@@ -6,7 +6,22 @@ This project was [initially](https://github.com/lcnogueira/react-readable-projec
 
 ## How to start the app
 
-## Preview
+1. Install and run the API server:
+
+```
+cd backend
+yarn install
+yarn start
+```
+
+2. After running the API server, install and run the frontend web app. **In the root folder**:
+
+```
+yarn install
+yarn start
+```
+
+<!-- ## Preview -->
 
 ### create-react-app
 

@@ -9,6 +9,9 @@
     "readable",
     "react"
   ],
+  "scripts": {
+    "start": "node server"
+  },
   "author": "David Harris",
   "license": "ISC",
   "dependencies": {
@@ -18,4 +21,4 @@
     "express": "^4.15.2",
     "clone": "^2.1.1"
   }
- }
+}
